@@ -21,6 +21,7 @@ fi
 # 3. Setup Backend
 echo "Setting up the Backend..."
 cd backend
+mkdir -p public/temp
 npm install
 cd ..
 

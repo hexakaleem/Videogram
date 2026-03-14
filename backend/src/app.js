@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true, limit: '16kb' }))
 // and req.params -> GET /users/:id/orders/:orderId
 
 // Serve all files in the 'public' folder as static assets
-app.use(express.static('public'))
+app.use(express.static(path.resolve(__dirname, '../public')))
 
 // ROUTES DECLARATION
 app.use('/api/v1/users', userRouter)
