@@ -71,6 +71,13 @@ export const userApi = {
   getSubscriptionStats: () => api.get('/users/subscriptions'),
   getChannelProfile: (username) => api.get(`/users/channel/${username}`),
   getWatchHistory: () => api.get('/users/watch-history'),
+  getAllChannels: () => api.get('/users/all-channels'),
+  addToWatchHistory: (videoId) => api.post(`/users/watch-history/${videoId}`),
+};
+
+// Video endpoints
+export const videoApi = {
+  getAllVideos: () => api.get('/videos'),
 };
 
 export default api;

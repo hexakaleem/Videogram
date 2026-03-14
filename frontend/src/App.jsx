@@ -7,6 +7,8 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Channel from './pages/Channel';
 import WatchHistory from './pages/WatchHistory';
+import Videos from './pages/Videos';
+import Channels from './pages/Channels';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -42,6 +44,22 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="videos"
+          element={
+            <ProtectedRoute>
+              <Videos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="channels"
+          element={
+            <ProtectedRoute>
+              <Channels />
             </ProtectedRoute>
           }
         />

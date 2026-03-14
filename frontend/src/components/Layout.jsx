@@ -24,6 +24,8 @@ export default function Layout() {
           {user ? (
             <>
               <Link to="/" className="nav-link">Dashboard</Link>
+              <Link to="/videos" className="nav-link">All Videos</Link>
+              <Link to="/channels" className="nav-link">All Channels</Link>
               <Link to="/watch-history" className="nav-link">Watch History</Link>
               <Link to={`/channel/${user.username}`} className="nav-link">My Channel</Link>
               <Link to="/profile" className="nav-link">Profile</Link>

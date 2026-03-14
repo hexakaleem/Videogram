@@ -664,7 +664,34 @@ const getWatchHistory = asyncHandler(async (req, res, next) => {
 })
 
 
+const getAllChannels = asyncHandler(async (req, res) => {
+    const channels = await User.find({}).select("username fullName avatar email");
+    return res.status(200).json(
+        new ApiResponse(200, channels, "Channels fetched successfully")
+    );
+})
 
+const addToWatchHistory = asyncHandler(async (req, res) => {
+    const { videoId } = req.params;
+
+    if (!mongoose.isValidObjectId(videoId)) {
+        throw new ApiError(400, "Invalid video ID");
+    }
+
+    const user = await User.findByIdAndUpdate(
+        req.user._id,
+        {
+            $addToSet: {
+                watchHistory: videoId
+            }
+        },
+        { new: true }
+    );
+
+    return res.status(200).json(
+        new ApiResponse(200, {}, "Video added to watch history")
+    );
+})
 
 
 
@@ -680,5 +707,7 @@ export {
     updateCoverImage,
     getMySubscriptionStats,
     getUserChannelProfile,
-    getWatchHistory
+    getWatchHistory,
+    getAllChannels,
+    addToWatchHistory
 }

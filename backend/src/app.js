@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import path from 'path'
 import { fileURLToPath } from 'url'
 import userRouter from './routes/user.routes.js'
+import videoRouter from './routes/video.routes.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const app = express()
@@ -33,6 +34,7 @@ app.use(express.static(path.resolve(__dirname, '../public')))
 
 // ROUTES DECLARATION
 app.use('/api/v1/users', userRouter)
+app.use('/api/v1/videos', videoRouter)
 
 
 // Serve frontend static files
