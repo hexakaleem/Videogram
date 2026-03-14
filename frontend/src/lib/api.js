@@ -53,13 +53,21 @@ api.interceptors.response.use(
 
 // Auth endpoints
 export const authApi = {
-  register: (data) => api.post('/users/register', data),
+  register: (formData) => api.post('/users/register', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
   login: (data) => api.post('/users/login', data),
   logout: () => api.get('/users/logout'),
   refreshToken: () => api.post('/users/refreshtokens', {}, { withCredentials: true }),
   getCurrentUser: () => api.get('/users/currentuser'),
   changePassword: (data) => api.post('/users/changepassword', data),
   updateDetails: (data) => api.patch('/users/updatedetails', data),
+  updateAvatar: (formData) => api.post('/users/updateavatar', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
+  updateCoverImage: (formData) => api.post('/users/updatecoverimage', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }),
 };
 
 // User endpoints
