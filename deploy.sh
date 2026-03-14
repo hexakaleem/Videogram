@@ -31,16 +31,9 @@ npm install
 npm run build
 cd ..
 
-# 5. Move Frontend Build to Backend Public
-echo "Deploying frontend assets to backend..."
-rm -rf backend/public/*
-mkdir -p backend/public
-cp -r frontend/dist/* backend/public/
-
-# 6. Start / Restart application via PM2
+# 5. Start / Restart application via PM2
 echo "Deploying applications with PM2..."
-# We only need the API now as it serves the frontend
-pm2 start ecosystem.config.cjs --only videogram-api
+pm2 start ecosystem.config.cjs
 pm2 save
 
 echo "======================================"

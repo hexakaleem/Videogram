@@ -2,7 +2,6 @@ import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
 import userRouter from './routes/user.routes.js'
-import path from 'path'
 
 const app = express()
 
@@ -45,9 +44,7 @@ app.use(express.static('public'))
 // ROUTES DECLARATION
 app.use('/api/v1/users', userRouter)
 
-// Catch-all route for React SPA (Must be AFTER API routes)
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve('public', 'index.html'));
-});
+
+
 
 export default app;
