@@ -39,16 +39,15 @@ app.use(express.urlencoded({ extended: true, limit: '16kb' }))
 // Accessed through req.query -> GET /products?category=shoes&price=100
 // and req.params -> GET /users/:id/orders/:orderId
 
-// Serve all files in the 'backend/public' folder as static assets
-app.use(express.static(path.resolve('backend', 'public')))
+// Serve all files in the 'public' folder as static assets
+app.use(express.static('public'))
 
 // ROUTES DECLARATION
 app.use('/api/v1/users', userRouter)
 
 // Catch-all route for React SPA (Must be AFTER API routes)
-// In Express 5, '*' is no longer a wildcard. Use '(.*)' instead.
-app.get('(.*)', (req, res) => {
-    res.sendFile(path.resolve('backend', 'public', 'index.html'));
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve('public', 'index.html'));
 });
 
 export default app;
