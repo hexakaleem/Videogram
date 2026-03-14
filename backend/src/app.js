@@ -38,6 +38,16 @@ app.use('/api/v1/users', userRouter)
 // Serve frontend static files
 app.use(express.static(path.resolve(__dirname, '../dist')))
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+    const statusCode = err.statuscode || 500
+    res.status(statusCode).json({
+        success: false,
+        message: err.message || "Internal Server Error",
+        errors: err.errors || []
+    })
+})
+
 // Catch-all route to serve the frontend index.html for SPA
 app.use((req, res) => {
     res.sendFile(path.resolve(__dirname, '../dist', 'index.html'))
