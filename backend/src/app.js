@@ -39,7 +39,7 @@ app.use('/api/v1/users', userRouter)
 app.use(express.static(path.resolve(__dirname, '../dist')))
 
 // Catch-all route to serve the frontend index.html for SPA
-app.get('*', (req, res) => {
+app.use((req, res) => {
     res.sendFile(path.resolve(__dirname, '../dist', 'index.html'))
 })
 
