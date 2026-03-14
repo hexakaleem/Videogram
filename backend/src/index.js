@@ -3,7 +3,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-dotenv.config({ path: path.resolve(__dirname, '../../.env') })
+dotenv.config({ path: path.resolve(__dirname, '../../.env'), quiet: true })
 
 import app from './app.js'
 import connectDB from './db/index.js'
@@ -46,11 +46,11 @@ const PORT = process.env.PORT
 
 
 connectDB()
-.then(() => {
-    app.listen(PORT, () => {
-        console.log(`App listening at Port: ${PORT}`)
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`App listening at Port: ${PORT}`)
+        })
     })
-})
-.catch((error) => {
-    console.log(`Mongo DB Connection Failed! ${error.message}`, error)
-})
+    .catch((error) => {
+        console.log(`Mongo DB Connection Failed! ${error.message}`, error)
+    })

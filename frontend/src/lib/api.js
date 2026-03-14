@@ -1,6 +1,10 @@
 import axios from 'axios';
 
-const API_BASE = '/api/v1';
+// Dynamically point to backend port 8000 using the current domain/IP
+const API_BASE = import.meta.env.VITE_API_URL ||
+  (window.location.hostname === 'localhost'
+    ? 'http://localhost:8000/api/v1'
+    : `http://${window.location.hostname}:8000/api/v1`);
 
 const api = axios.create({
   baseURL: API_BASE,
