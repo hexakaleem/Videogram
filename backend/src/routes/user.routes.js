@@ -1,26 +1,11 @@
 import express from 'express'
-import { changeCurrentPassword, getCurrentUser, getMySubscriptionStats, getUserChannelProfile, getWatchHistory, loginUser, logoutUser, refreshAccessToken, registerUser, updateAccountDetails, updateCoverImage, updateUserAvatar } from '../controllers/user.controller.js';
-import { upload } from '../middlewares/multer.middleware.js';
+import { changeCurrentPassword, getCurrentUser, getMySubscriptionStats, getUserChannelProfile, getWatchHistory, loginUser, logoutUser, refreshAccessToken, registerUser, updateAccountDetails } from '../controllers/user.controller.js';
 import { verifyJWT } from '../middlewares/auth.middleware.js';
 
 const router = express.Router()
 
 // ROUTES
-router.route('/register').post(
-    // Multer Middleware
-    upload.fields([
-        {
-            name: 'avatar',
-            maxCount: 1
-        },
-
-        {
-            name: 'coverImage',
-            maxCount: 1
-        }
-    ]),
-    registerUser)
-
+router.route('/register').post(registerUser)
 
 router.route('/login').post(loginUser)
 router.route('/refreshtokens').post(refreshAccessToken)
@@ -32,31 +17,10 @@ router.route('/currentuser').get(verifyJWT, getCurrentUser)
 router.route('/updatedetails').patch(verifyJWT, updateAccountDetails)
 
 
-router.route('/updateavatar').post(
-    verifyJWT,
-    upload.single( 'avatar' ),
-    updateUserAvatar
-)
-
-
-
-router.route('/updatecoverimage').post(
-    verifyJWT,
-    upload.fields([
-        {
-            name: 'coverImage',
-            maxCount: 1
-        }
-    ]),
-    updateCoverImage
-)
-
-
 router.route('/subscriptions').get(verifyJWT, getMySubscriptionStats)
 
 router.route('/channel/:username').get(verifyJWT, getUserChannelProfile)
 
 router.route('/watch-history').get(verifyJWT, getWatchHistory)
-
 
 export default router;

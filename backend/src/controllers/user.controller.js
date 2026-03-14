@@ -2,7 +2,6 @@ import { User } from "../models/user.model.js"
 import { Subscription } from "../models/subscription.model.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiError } from '../utils/ApiError.js'
-import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import jwt from 'jsonwebtoken'
 import mongoose from 'mongoose';
@@ -74,24 +73,6 @@ const registerUser = asyncHandler(async (req, res, next) => {
     }
 
 
-    // 4. Check for Avatar
-    // 5. Check for Cover Image
-    const avatarLocalPath = req.files?.avatar?.[0]?.path
-    const coverImageLocalPath = req.files?.coverImage?.[0]?.path
-
-    if (!avatarLocalPath) {
-        throw new ApiError(400, 'Avatar is Required!')
-    }
-
-
-    // 6. Upload the photos on cloudinary, Check if avatar is uploaded
-    const avatar = await uploadOnCloudinary(avatarLocalPath)
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath)
-
-    if (!avatar) {
-        throw new ApiError(400, 'Avatar is required!')
-    }
-
     // 7. Create user Object
     // 8. Create user in Database
     const createdUser = await User.create({
@@ -99,8 +80,8 @@ const registerUser = asyncHandler(async (req, res, next) => {
         username,
         email,
         password,
-        avatar: avatar.url,
-        coverImage: coverImage?.url || ""
+        avatar: "",
+        coverImage: ""
     })
 
 
@@ -399,83 +380,6 @@ const updateAccountDetails = asyncHandler(async (req, res, next) => {
 
 
 
-const updateUserAvatar = asyncHandler(async (req, res, next) => {
-    const avatarLocalPath = req.file?.path
-    if (!avatarLocalPath) {
-        throw new ApiError(400, 'Please Upload Aavatar')
-    }
-
-    const avatar = await uploadOnCloudinary(avatarLocalPath)
-    if (!avatar.url) {
-        throw new ApiError(500, 'There was an error Uploading Avatar on cloudinary')
-    }
-
-    const user = await User.findByIdAndUpdate(
-        req.user?._id,
-        {
-            $set:
-                { avatar: avatar.url }
-        },
-        { new: true }
-
-    ).select("-password -refreshToken")
-
-    return res.status(200).json(
-        new ApiResponse(
-            200,
-            user,
-            "Avatar Updated Successfully"
-        )
-    )
-
-})
-
-
-
-
-
-
-
-
-
-
-const updateCoverImage = asyncHandler(async (req, res, next) => {
-
-    // If you user upload.fields([{name: 'coverImage}]) then use req.files?.coverImage[0]?.path
-    // If you user upload.single('coverImage'), then this syntax is good
-
-    // const coverImageLocalPath = req.file?.path
-
-    const coverImageLocalPath = req.files?.coverImage[0]?.path
-
-    if (!coverImageLocalPath) {
-        throw new ApiError(400, "Please Upload Cover Image")
-    }
-
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath)
-    if (!coverImage) {
-        throw new ApiError(500, "There was an error uploading Cover Image")
-    }
-
-    const user = await User.findByIdAndUpdate(
-        req.user?._id,
-        {
-            $set:
-                { coverImage: coverImage.url }
-        },
-
-        { new: true }
-    )
-        .select("-password -refreshToken")
-
-    return res.status(200).json(
-        new ApiResponse(
-            200,
-            user,
-            "CoverImage Updated Successfully"
-        )
-    )
-})
 
 
 
@@ -682,8 +586,7 @@ export {
     changeCurrentPassword,
     getCurrentUser,
     updateAccountDetails,
-    updateUserAvatar,
-    updateCoverImage,
+
     getMySubscriptionStats,
     getUserChannelProfile,
     getWatchHistory
