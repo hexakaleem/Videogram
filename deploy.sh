@@ -32,13 +32,14 @@ npm run build
 cd ..
 
 # 5. Start / Restart application via PM2
-echo "Deploying applications with PM2..."
-pm2 start ecosystem.config.cjs
+echo "Deploying application with PM2..."
+# Since frontend is now served by backend, we only need to manage the api process
+pm2 restart videogram-api || pm2 start ecosystem.config.cjs
 pm2 save
 
 echo "======================================"
 echo "Deployment successful!"
-echo "Backend API is running in the background."
-echo "Frontend is being served by PM2."
+echo "The application is running in the background."
+echo "Backend is serving the Frontend from the same port."
 echo "To ensure PM2 starts on reboot, run: pm2 startup"
 echo "======================================"
