@@ -113,7 +113,7 @@ export default function Register() {
 
           <div className="form-row">
             <div className="input-group">
-              <label>Avatar (required)</label>
+              <label>Avatar (optional)</label>
               <div className="file-input-wrap">
                 <input
                   ref={avatarRef}
@@ -154,7 +154,7 @@ export default function Register() {
 
           {error && <p className="error-msg">{error}</p>}
 
-          <button type="submit" className="btn btn-primary auth-submit" disabled={loading || !avatar}>
+          <button type="submit" className="btn btn-primary auth-submit" disabled={loading}>
             {loading ? 'Creating account...' : 'Create account'}
           </button>
         </form>

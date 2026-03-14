@@ -1,4 +1,4 @@
-import mongoose, {Schema} from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
@@ -30,7 +30,7 @@ const userSchema = new Schema(
 
         avatar: {
             type: String, // url string from Cloudinary
-            required: true
+            required: false
         },
 
         coverImage: {
@@ -39,7 +39,7 @@ const userSchema = new Schema(
 
         watchHistory: [{
             type: Schema.Types.ObjectId,
-            ref: "Video" 
+            ref: "Video"
         }],
 
         password: {
@@ -52,7 +52,7 @@ const userSchema = new Schema(
 
         }
     },
-    {timestamps: true}
+    { timestamps: true }
 )
 
 // This is Hook
@@ -64,17 +64,17 @@ userSchema.pre('save', async function () {
 
 
 // This is custom method
-userSchema.methods.isPasswordCorrect = async function(password){
+userSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.password)
 }
 
-userSchema.methods.generateAccessToken = function(){
+userSchema.methods.generateAccessToken = function () {
     return jwt.sign(
         {
-        _id: this._id,
-        username: this.username,
-        email: this.email,
-        fullName: this.fullName
+            _id: this._id,
+            username: this.username,
+            email: this.email,
+            fullName: this.fullName
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
@@ -84,7 +84,7 @@ userSchema.methods.generateAccessToken = function(){
 }
 
 
-userSchema.methods.generateRefreshToken = function(){
+userSchema.methods.generateRefreshToken = function () {
     return jwt.sign(
         {
             _id: this._id

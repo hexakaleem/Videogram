@@ -75,22 +75,16 @@ const registerUser = asyncHandler(async (req, res, next) => {
 
 
     // 4. Check for Avatar
-    // 5. Check for Cover Image
+    // 5. Check for Check Image
     const avatarLocalPath = req.files?.avatar?.[0]?.path
     const coverImageLocalPath = req.files?.coverImage?.[0]?.path
 
-    if (!avatarLocalPath) {
-        throw new ApiError(400, 'Avatar is Required!')
-    }
-
 
     // 6. Upload the photos on cloudinary, Check if avatar is uploaded
-    const avatar = await uploadOnCloudinary(avatarLocalPath)
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath)
+    const avatar = avatarLocalPath ? await uploadOnCloudinary(avatarLocalPath) : null
+    const coverImage = coverImageLocalPath ? await uploadOnCloudinary(coverImageLocalPath) : null
 
-    if (!avatar) {
-        throw new ApiError(400, 'Avatar is required!')
-    }
+    const DEFAULT_AVATAR = "https://res.cloudinary.com/demo/image/upload/d_avatar.png/avatar.png"
 
     // 7. Create user Object
     // 8. Create user in Database
@@ -99,7 +93,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
         username,
         email,
         password,
-        avatar: avatar.url,
+        avatar: avatar?.url || DEFAULT_AVATAR,
         coverImage: coverImage?.url || ""
     })
 
