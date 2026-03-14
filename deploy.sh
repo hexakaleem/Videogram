@@ -23,6 +23,9 @@ echo "Setting up the Backend..."
 cd backend
 mkdir -p public/temp
 npm install
+echo "Running Database Seeds..."
+npm run seed:subscriptions || echo "Subscriptions already seeded"
+npm run seed:videos || echo "Videos already seeded"
 cd ..
 
 # 4. Setup Frontend

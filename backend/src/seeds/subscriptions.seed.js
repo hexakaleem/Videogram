@@ -2,9 +2,13 @@ import dotenv from 'dotenv'
 import mongoose from "mongoose"
 
 import { Subscription } from "../models/subscription.model.js"
-import {DB_NAME} from '../constants.js'
+import { DB_NAME } from '../constants.js'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 dotenv.config({
-    path: '../../.env'
+  path: path.resolve(__dirname, '../../../.env')
 })
 console.log("MONGO:::::::::::::", process.env.MONGO_URI)
 
@@ -21,7 +25,7 @@ const USERS = {
 
 const seedSubscriptions = async () => {
   try {
-    
+
     await mongoose.connect(`${process.env.MONGO_URI}/${DB_NAME}`)
     console.log("✅ MongoDB connected for seeding")
 

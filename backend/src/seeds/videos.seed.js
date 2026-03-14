@@ -3,8 +3,12 @@ import { Video } from "../models/video.model.js";
 import { User } from "../models/user.model.js";
 import { DB_NAME } from "../constants.js";
 import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 dotenv.config({
-    path: '../../.env'
+  path: path.resolve(__dirname, '../../../.env')
 })
 
 
