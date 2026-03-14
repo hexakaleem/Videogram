@@ -34,7 +34,7 @@ export default function Layout() {
                   <img src={user.avatar} alt={user.fullName} className="user-avatar" />
                 </Link>
                 <button onClick={handleLogout} className="btn btn-ghost btn-sm">
-                  Logout
+                  Sign Out
                 </button>
               </div>
             </>
