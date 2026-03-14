@@ -42,15 +42,15 @@ function connectDB(){}
 
 */
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT
 
 
 connectDB()
-    .then(() => {
-        app.listen(PORT, () => {
-            console.log(`App listening at Port: ${PORT}`)
-        })
+.then(() => {
+    app.listen(PORT, () => {
+        console.log(`App listening at Port: ${PORT}`)
     })
-    .catch((error) => {
-        console.log(`Mongo DB Connection Failed! ${error.message}`, error)
-    })
+})
+.catch((error) => {
+    console.log(`Mongo DB Connection Failed! ${error.message}`, error)
+})
