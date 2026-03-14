@@ -5,15 +5,6 @@ import userRouter from './routes/user.routes.js'
 
 const app = express()
 
-// Request Logging Middleware
-app.use((req, res, next) => {
-    const start = Date.now();
-    res.on('finish', () => {
-        const duration = Date.now() - start;
-        console.log(`[API LOG] ${req.method} ${req.originalUrl} | Status: ${res.statusCode} | Time: ${duration}ms`);
-    });
-    next();
-})
 
 // Middlewares Usage
 app.use(cors({
@@ -25,7 +16,7 @@ app.use(cors({
 app.use(cookieParser())
 
 // This middleware converts JSON into JS Object and Parses it into "req.body", with incoming limit of 16KB
-app.use(express.json({ limit: '16kb' }))
+app.use(express.json({limit: '16kb'}))
 
 // urlencoded parses the urlencoded payloads (not for form data) and extended:true allows nested objects
 app.use(express.urlencoded({ extended: true, limit: '16kb' }))
