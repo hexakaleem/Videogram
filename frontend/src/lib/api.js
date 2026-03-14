@@ -73,11 +73,13 @@ export const userApi = {
   getWatchHistory: () => api.get('/users/watch-history'),
   getAllChannels: () => api.get('/users/all-channels'),
   addToWatchHistory: (videoId) => api.post(`/users/watch-history/${videoId}`),
+  toggleSubscription: (channelId) => api.post(`/users/toggle-subscription/${channelId}`),
 };
 
 // Video endpoints
 export const videoApi = {
   getAllVideos: () => api.get('/videos'),
+  publishVideo: (data) => api.post('/videos/publish', data),
 };
 
 export default api;

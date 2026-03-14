@@ -62,5 +62,6 @@ router.route('/watch-history/:videoId').post(verifyJWT, addToWatchHistory)
 
 router.route('/all-channels').get(verifyJWT, getAllChannels)
 
+router.route('/toggle-subscription/:channelId').post(verifyJWT, toggleSubscription)
 
 export default router;
